@@ -1,0 +1,50 @@
+# Node modules
+node_modules/
+
+# Environment Variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Build files
+dist/
+build/
+
+# Dependency directories
+.bower_components/
+jspm_packages/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Test coverage
+coverage/
+
+# Cache files
+*.cache
+.cache/
+*.bak
+
+# Debugging
+debug/
+
+# Configurations (optional, if not meant to be shared)
+config/local.json

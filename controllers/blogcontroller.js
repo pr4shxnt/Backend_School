@@ -1,7 +1,7 @@
 const Blog = require('../Models/blogModel');
 const path = require('path');
 const fs = require('fs');
-const { trusted } = require('mongoose');
+const mongoose = require('mongoose');
 
 // Create a new blog
 exports.createBlog = async (req, res) => {
@@ -56,22 +56,21 @@ exports.updateBlog = async (req, res) => {
     try {
       const { title, author, content, isReviewed } = req.body;
 
-      // Find the blog by ID
       const blog = await Blog.findById(req.params.id);
       if (!blog) {
         return res.status(404).json({ message: 'Blog not found' });
       }
 
-      // Update only the specified fields
+
       blog.title = title || blog.title;
       blog.author = author || blog.author;
       blog.content = content || blog.content;
 
       if (typeof isReviewed !== 'undefined') {
-        blog.isReviewed = isReviewed; // Update review status if provided
+        blog.isReviewed = isReviewed;
       }
 
-      // Save the updated blog
+
       const updatedBlog = await blog.save();
       res.status(200).json({ message: 'Blog updated successfully!', blog: updatedBlog });
     } catch (error) {
@@ -82,20 +81,26 @@ exports.updateBlog = async (req, res) => {
 
 // Delete a blog
 exports.deleteBlog = async (req, res) => {
-  try {
-    const blog = await Blog.findByIdAndDelete(req.params.id);
-    if (!blog) return res.status(404).json({ message: 'Blog not found' });
+    try {
+      const { id } = req.params;
 
-    // Optionally delete associated images
-    blog.images.forEach(image => {
-      const imagePath = path.join(__dirname, '../uploads/blog_images/', image);
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'Invalid ID format' });
       }
-    });
 
-    res.status(200).json({ message: 'Blog deleted successfully!' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error deleting blog', error: error.message });
-  }
-};
+      const blog = await Blog.findByIdAndDelete(id);
+      if (!blog) return res.status(404).json({ message: 'Blog not found' });
+
+      // Optionally delete associated images
+      blog.images.forEach((image) => {
+        const imagePath = path.join(__dirname, '../uploads/blog_images/', image);
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+      });
+
+      res.status(200).json({ message: 'Blog deleted successfully!' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting blog', error: error.message });
+    }
+  };

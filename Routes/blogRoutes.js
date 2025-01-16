@@ -33,9 +33,9 @@ router.get('/reviewed', blogController.getReviewedBlogs);
 router.get('/pending', blogController.getPendingBlogs);
 
 // Update a blog (title, author, content, isReviewed)
-router.put('/update/:id', blogController.updateBlog);
+router.put('/:id', blogController.updateBlog);
 
 // Delete a blog
-router.delete('/delete/:id', blogController.deleteBlog);
+router.delete('/:id', blogController.deleteBlog);
 
 module.exports = router;

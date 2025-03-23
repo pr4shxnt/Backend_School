@@ -9,6 +9,7 @@ const staffRoutes = require("./Routes/staffRoute");
 const eventsRoutes = require("./Routes/eventsRoute");
 const studentsRoutes = require("./Routes/studentsRoute");
 const blogRoutes = require("./Routes/blogRoutes");
+const admissionInquiry = require("./Routes/admissionInquiryRoutes");
 
 const cron = require('node-cron');
 
@@ -32,7 +33,7 @@ app.use('/api/gallery', galleryRoutes);
 app.use('/api/staffs', staffRoutes);
 app.use('/api/events', eventsRoutes);
 app.use('/api/students', studentsRoutes);
-
+app.use('/api/admissionInquiry', admissionInquiry);
 app.use('/api/blogs', blogRoutes);
 
 

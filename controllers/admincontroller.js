@@ -51,13 +51,13 @@ const loginAdmin = async (req, res) => {
       const token = jwt.sign(
         { id: admin._id, username: admin.username, email: admin.email },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" } // Token will expire in 1 hour
+        { expiresIn: "4h" } // Token will expire in 1 hour
       );
 
       // Send the token back in the response
       res.status(200).json({ message: "Login successful", token });
     } catch (error) {
-      res.status(500).json({ message: "Error logging in", error: error.message });
+      res.status(500).json({ message: "Error logging in, Try again later.", error: error.message });
     }
 };
 

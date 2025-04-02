@@ -1,0 +1,1 @@
+const NewContactMail = require("../Models/newContactMail")

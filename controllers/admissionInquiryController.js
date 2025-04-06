@@ -3,12 +3,16 @@ const express = require("express");
 
 exports.createAdmissionInquiry = async (req, res) => {
     try {
-        const { studentName, dateOfBirth, gradeApplying, parentName, email, phone, address, previousSchool, message } = req.body;
-        const newAdmissionInquiry = new AdmissionInquiry({ studentName, dateOfBirth, gradeApplying, parentName, email, phone, address, previousSchool, message });
+        const { studentName, dateOfBirth, gradeApplying, parentName, email, phone, address,
+             previousSchool, message } = req.body;
+        const newAdmissionInquiry = new AdmissionInquiry({ studentName, dateOfBirth, gradeApplying,
+             parentName, email, phone, address, previousSchool, message });
         await newAdmissionInquiry.save();
-        res.status(201).json({ message: "Admission Inquiry created successfully!", admissionInquiry: newAdmissionInquiry });
+        res.status(201).json({ message: "Admission Inquiry created successfully!", 
+            admissionInquiry: newAdmissionInquiry });
     } catch (error) {
-        res.status(500).json({ message: "Error creating Admission Inquiry", error: error.message });
+        res.status(500).json({ message: "Error creating Admission Inquiry", 
+            error: error.message });
     }
 }
 

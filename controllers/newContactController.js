@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import otpGenerator from "otp-generator";
 import redisClient from "../config/redisClient.js";
 import NewContactMail from "../Models/newContactMail.js";
+import cron from "node-cron"
 
 
 
@@ -116,3 +117,20 @@ export const verifyOTP = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const deleteContact = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const deletedContact = await NewContactMail.findByIdAndDelete(id);
+
+        if (!deletedContact) {
+            return res.status(404).json({ message: "Contact not found" });
+        }
+
+        res.status(200).json({ message: "Contact deleted successfully" });
+    } catch (error) {
+        console.error("❌ Error deleting contact:", error);
+        res.status(500).json({ error: error.message });
+    }
+}
